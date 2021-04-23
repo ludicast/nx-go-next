@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "name": "dep-graph",
+  "version": "0.0.1",
+  "generators": {
+    "dep-graph": {
+      "factory": "./src/generators/dep-graph/generator",
+      "schema": "./src/generators/dep-graph/schema.json",
+      "description": "dep-graph generator"
+    }
+  }
+}

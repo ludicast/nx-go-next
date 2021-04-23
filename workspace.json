@@ -1,0 +1,79 @@
+{
+  "version": 2,
+  "projects": {
+    "dep-graph": {
+      "root": "packages/dep-graph",
+      "sourceRoot": "packages/dep-graph/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "packages/dep-graph/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/packages/dep-graph"
+          ],
+          "options": {
+            "jestConfig": "packages/dep-graph/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "executor": "@nrwl/node:package",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "dist/packages/dep-graph",
+            "tsConfig": "packages/dep-graph/tsconfig.lib.json",
+            "packageJson": "packages/dep-graph/package.json",
+            "main": "packages/dep-graph/src/index.ts",
+            "assets": [
+              "packages/dep-graph/*.md",
+              {
+                "input": "./packages/dep-graph/src",
+                "glob": "**/*.!(ts)",
+                "output": "./src"
+              },
+              {
+                "input": "./packages/dep-graph",
+                "glob": "generators.json",
+                "output": "."
+              },
+              {
+                "input": "./packages/dep-graph",
+                "glob": "executors.json",
+                "output": "."
+              }
+            ]
+          }
+        }
+      }
+    },
+    "dep-graph-e2e": {
+      "projectType": "application",
+      "root": "e2e/dep-graph-e2e",
+      "sourceRoot": "e2e/dep-graph-e2e/src",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/nx-plugin:e2e",
+          "options": {
+            "target": "dep-graph:build",
+            "npmPackageName": "@nx-go/dep-graph",
+            "pluginOutputPath": "dist/packages/dep-graph",
+            "jestConfig": "e2e/dep-graph-e2e/jest.config.js"
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/workspace"
+  }
+}
